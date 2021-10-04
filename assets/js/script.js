@@ -8,6 +8,7 @@ fetch('https://calendarific.com/api/v2/holidays?&api_key=1f4dc4481a87c2b13ef01f6
 	console.log(responce)
 })
 
+
 const date = new Date();
 console.log(date);
 
@@ -64,13 +65,14 @@ const renderCalendar = () => {
   }
 
   for (let i = 1; i <= lastDay; i++) {
+    let month = new Date().getMonth();
     if (
       i === new Date().getDate() &&
       date.getMonth() === new Date().getMonth()
     ) {
       days += `<div class="today">${i}</div>`;
     } else {
-      days += `<div>${i}</div>`;
+      days += `<div id=${month}${i} class="calenderDays">${i}</div>`;
     }
   }
 
@@ -91,3 +93,8 @@ document.querySelector(".next").addEventListener("click", () => {
 });
 
 renderCalendar();
+
+$('.days div').click(function(){
+  console.log(event)
+  console.log(this)
+})

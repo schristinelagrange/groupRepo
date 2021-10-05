@@ -109,7 +109,7 @@
   }
   
   .today {
-    background-color: #167e56;
+    background-color: #167e56!important;
   }
 
   #closeDialog{

@@ -1,4 +1,4 @@
-fetch('https://calendarific.com/api/v2/holidays?&api_key=1f4dc4481a87c2b13ef01f67da9c0f7b95dbdac8&country=US&year=2021&type=national,local')
+fetch('https://calendarific.com/api/v2/holidays?&api_key=1f4dc4481a87c2b13ef01f67da9c0f7b95dbdac8&country=US&year=2021&type=national')
 .then(function(responce)
 {
 	return responce.json();
@@ -66,13 +66,15 @@ const renderCalendar = () => {
 
   for (let i = 1; i <= lastDay; i++) {
     let month = new Date().getMonth();
+    let year = new Date().getFullYear();
+    console.log(new Date().getMonth())
     if (
       i === new Date().getDate() &&
       date.getMonth() === new Date().getMonth()
     ) {
       days += `<div class="today">${i}</div>`;
     } else {
-      days += `<div id=${month}${i} class="calenderDays">${i}</div>`;
+      days += `<div id=${month+1}/${i}/${year} class="calenderDays">${i}</div>`;
     }
   }
 
@@ -97,4 +99,23 @@ renderCalendar();
 $('.days div').click(function(){
   console.log(event)
   console.log(this)
+})
+
+
+
+
+$(".calenderDays").click(function(event)
+{
+  console.log(event)
+  $("#calenderDialog").css({'visibility': 'visible', 'margin-right':'3%'})
+  $(".calendar").css("width", "60%")
+  $(".container").css({"justify-content": "normal", "padding-left":"5%"})
+  $("#dialogHeaderContent").text(event.target.id);
+})
+
+$("#closeDialog").click(function()
+{
+  $("#calenderDialog").css({'visibility': 'hidden'})
+  $(".calendar").css("width", "90%")
+  $(".container").css({"justify-content": "center"})
 })

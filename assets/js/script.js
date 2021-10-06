@@ -119,3 +119,30 @@ $("#closeDialog").click(function()
   $(".calendar").css("width", "90%")
   $(".container").css({"justify-content": "center"})
 })
+
+//stock API
+
+var stockAPIkey = '9f9b6e858376323424e765f45067c09e'
+
+var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey=' +stockAPIkey;
+
+var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?apikey=' +stockAPIkey;
+
+
+
+
+fetch(stockURL)
+.then(function (response) {
+  response.json().then(function (data) {
+
+  console.log(data)
+})
+})
+
+fetch(mystockURL)
+.then(function (response) {
+  response.json().then(function (data){
+
+  console.log(data)
+})
+})

@@ -148,14 +148,28 @@ for(let i=0; i<data.historical.length; i++) {
 
   if(date == dateform) {
     var spindexdiv = document.createElement('div');
+    spindexdiv.classList = "";
     $('#dialogContent').append(spindexdiv);
 
     var closeprice = document.createElement('p');
     closeprice.setAttribute('style', 'color: white')
     closeprice.textContent = 'S&P Close Price : ' + data.historical[i].close;
 
-    spindexdiv.append(closeprice);
+    var pricechange = document.createElement('span');
+    pricechange.textContent = data.historical[i].changePercent + '(%) change';
+
+    if(data.historical[i].changePercent>0) {
+      pricechange.setAttribute('style', 'background-color: red; color:white')
+    } else if(data.historical[i].changePercent<0) {
+      pricechange.setAttribute('style', 'background-color: blue; color:white')
+    }
+
+
+    spindexdiv.append(closeprice)
+    spindexdiv.append(pricechange);
     console.log(data.historical[i].close);
+  } else{
+    console.log('not bussiness day')
   }
 }
 })

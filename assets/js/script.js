@@ -111,6 +111,12 @@ $(".calenderDays").click(function(event)
   $(".calendar").css("width", "60%")
   $(".container").css({"justify-content": "normal", "padding-left":"5%"})
   $("#dialogHeaderContent").text(event.target.id);
+
+
+//call stockAPI
+var date = event.target.id
+  stockAPI(date);
+  console.log(date)
 })
 
 $("#closeDialog").click(function()
@@ -122,27 +128,35 @@ $("#closeDialog").click(function()
 
 //stock API
 
-var stockAPIkey = '9f9b6e858376323424e765f45067c09e'
 
-var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey=' +stockAPIkey;
+function stockAPI (date) {
 
-var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?apikey=' +stockAPIkey;
-
-
+  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey=9f9b6e858376323424e765f45067c09e';
+  var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?apikey=9f9b6e858376323424e765f45067c09e';
 
 
 fetch(stockURL)
 .then(function (response) {
-  response.json().then(function (data) {
+  return response.json()
+})
+.then(function (data) {
+  console.log(data.historical)
 
-  console.log(data)
-})
-})
 
-fetch(mystockURL)
-.then(function (response) {
-  response.json().then(function (data){
+for(let i=0; i<data.historical.length; i++) {
+  var dateform = moment(data.historical[i].date).format('M/D/YYYY');
 
-  console.log(data)
+  if(date == dateform) {
+    var spindexdiv = document.createElement('div');
+    $('#dialogContent').append(spindexdiv);
+
+    var closeprice = document.createElement('p');
+    closeprice.setAttribute('style', 'color: white')
+    closeprice.textContent = 'S&P Close Price : ' + data.historical[i].close;
+
+    spindexdiv.append(closeprice);
+    console.log(data.historical[i].close);
+  }
+}
 })
-})
+}

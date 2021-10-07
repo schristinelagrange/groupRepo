@@ -1,3 +1,55 @@
+let lat = '';
+let lon = '';
+let url = '';
+let weather;
+//pulls data from local storage and converts it back to an object
+let pulledData = JSON.parse(localStorage.getItem("data"));
+//checks to see if pulledSearches is null, if not sets it to pulledSearches, if its null sets it to a object with an array.
+let data = (pulledData !== null) ? pulledData : {data:[]};
+
+
+
+
+
+function getWeather(url)
+{
+  console.log(url  + "this is url");
+  fetch(url)
+    .then(function(responce)
+    {
+      return responce.json();
+    })
+    .then(function(data)
+    {
+      console.log(data);
+      weather = data;
+    })
+}
+$( document ).ready(function()
+{
+  window.navigator.geolocation.getCurrentPosition(function(position)
+  {
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
+    url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=imperial&appid=9abc24e2bd82a06cffa0711c49b6f93b`;
+    console.log(url);
+    getWeather(url);
+    console.log(weather + "this is weather")
+  })
+
+})
+
+function renderWeather(event)
+{
+  for(let i = 0; i < 7; i++)
+  {
+    console.log(moment(event.target.id, "MM/DD/YYYY").format('X'))
+  }
+}
+
+
+
+
 fetch('https://calendarific.com/api/v2/holidays?&api_key=1f4dc4481a87c2b13ef01f67da9c0f7b95dbdac8&country=US&year=2021&type=national')
 .then(function(responce)
 {
@@ -65,14 +117,13 @@ const renderCalendar = () => {
   }
 
   for (let i = 1; i <= lastDay; i++) {
-    let month = new Date().getMonth();
-    let year = new Date().getFullYear();
-    console.log(new Date().getMonth())
+    let month = date.getMonth();
+    let year = date.getFullYear();
     if (
       i === new Date().getDate() &&
       date.getMonth() === new Date().getMonth()
     ) {
-      days += `<div class="today">${i}</div>`;
+      days += `<div class="today calenderDays" id=${month+1}/${i}/${year}>${i}</div>`;
     } else {
       days += `<div id=${month+1}/${i}/${year} class="calenderDays">${i}</div>`;
     }
@@ -101,10 +152,14 @@ $('.days div').click(function(){
   console.log(this)
 })
 
+$("#closeDialog").click(function()
+{
+  $("#calenderDialog").css({'visibility': 'hidden'})
+  $(".calendar").css("width", "90%")
+  $(".container").css({"justify-content": "center"})
+})
 
-
-
-$(".calenderDays").click(function(event)
+$( document ).on('click','.calenderDays',(function(event)
 {
   console.log(event)
   $("#calenderDialog").css({'visibility': 'visible', 'margin-right':'3%'})
@@ -114,10 +169,18 @@ $(".calenderDays").click(function(event)
 
 
 //call stockAPI
-var date = event.target.id
+
+var date = event.target.id;
+var dialogInclude = $('#dialogContent')[0].children;
+
+if(dialogInclude <=3) {
   stockAPI(date);
-  console.log(date)
-})
+} else {
+  $('.stockAPIdiv').remove();
+  stockAPI(date);
+}
+  
+}))
 
 $("#closeDialog").click(function()
 {
@@ -132,8 +195,7 @@ $("#closeDialog").click(function()
 function stockAPI (date) {
 
   var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey=9f9b6e858376323424e765f45067c09e';
-  var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/AAPL?apikey=9f9b6e858376323424e765f45067c09e';
-
+  
 
 fetch(stockURL)
 .then(function (response) {
@@ -148,12 +210,17 @@ for(let i=0; i<data.historical.length; i++) {
 
   if(date == dateform) {
     var spindexdiv = document.createElement('div');
-    spindexdiv.classList = "";
+    spindexdiv.classList = "stockAPIdiv";
     $('#dialogContent').append(spindexdiv);
+
+    var sptitle = document.createElement('h3')
+    sptitle.textContent = "Today's S&P index"
+    sptitle.setAttribute('style', 'color: white');
+    spindexdiv.append(sptitle);
 
     var closeprice = document.createElement('p');
     closeprice.setAttribute('style', 'color: white')
-    closeprice.textContent = 'S&P Close Price : ' + data.historical[i].close;
+    closeprice.textContent = 'Close Price : ' + data.historical[i].close;
 
     var pricechange = document.createElement('span');
     pricechange.textContent = data.historical[i].changePercent + '(%) change';
@@ -168,9 +235,51 @@ for(let i=0; i<data.historical.length; i++) {
     spindexdiv.append(closeprice)
     spindexdiv.append(pricechange);
     console.log(data.historical[i].close);
-  } else{
-    console.log('not bussiness day')
-  }
+  } 
+  // else {
+  //   console.log('not bussiness day')
+  // }
 }
 })
 }
+
+//mystock API
+
+mystockAPI();
+
+function mystockAPI () {
+    
+  var symbolURL = 'https://financialmodelingprep.com/api/v3/stock/list?apikey=9f9b6e858376323424e765f45067c09e' 
+  // var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + AAPL +'?apikey=9f9b6e858376323424e765f45067c09e';
+  var mystocksymbol;
+
+  var mystockAPIdiv = document.createElement('div');
+  $('#dialogContent').append(mystockAPIdiv);
+
+
+
+
+
+//   fetch(symbolURL)
+// .then(function (response) {
+//   return response.json()
+// })
+// .then(function (data) {
+//   for(let i=0; i<data.length; i++){
+//   if(mystock.value == data[i].name){
+//     mystocksymbol = data[i].symbol;
+//   }
+//   }
+// })
+  
+}
+  // console.log(moment(event.target.id, "MM/DD/YYYY").format('X'))
+
+
+
+
+
+
+//`https://api.openweathermap.org/data/2.5/onecall?lat=34.5308634&lon=-82.6504161&exclude=hourly,minutely&units=imperial&appid=9abc24e2bd82a06cffa0711c49b6f93b`
+
+

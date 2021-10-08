@@ -171,7 +171,7 @@ $( document ).on('click','.calenderDays',(function(event)
 //call stockAPI
 
 var date = event.target.id;
-// var dialogInclude = $('#dialogContent')[0].children;
+
 
 if($('.stockAPIdiv') == null) {
   stockAPI(date);
@@ -180,7 +180,7 @@ if($('.stockAPIdiv') == null) {
   stockAPI(date);
 }
 
-
+//call mystockAPI
 if($('.mystockAPIdiv') == null) {
   getSymbol();
 } else {
@@ -230,28 +230,33 @@ for(let i=0; i<data.historical.length; i++) {
     closeprice.setAttribute('style', 'color: white')
     closeprice.textContent = 'Close Price : ' + data.historical[i].close;
 
-    var pricechange = document.createElement('span');
-    pricechange.textContent = data.historical[i].changePercent + '(%) change';
+    var pricechange = document.createElement('p');
+    pricechange.textContent = data.historical[i].change + '('+ data.historical[i].changePercent + '%)';
 
     if(data.historical[i].changePercent>0) {
-      pricechange.setAttribute('style', 'background-color: red; color:white')
+      pricechange.setAttribute('style', 'color:red')
+      var up = document.createElement('span');
+      up.innerHTML = '🔺';
+      pricechange.append(up);
     } else if(data.historical[i].changePercent<0) {
-      pricechange.setAttribute('style', 'background-color: blue; color:white')
+      pricechange.setAttribute('style', 'color:blue')
+      var down = document.createElement('span');
+      down.innerHTML = '🔻';
+      pricechange.append(down);
     }
-
 
     spindexdiv.append(closeprice)
     spindexdiv.append(pricechange);
 
   } 
-  // else {
-  //   console.log('not bussiness day')
-  // }
-}
-})
 }
 
-// my stock submit -> get Symbol from the input
+})
+
+
+}
+
+// my stock submit (auto fill) -> get Symbol from the input
 
 
   $('.stocksavebtn').on('click', function saveStock() {
@@ -268,23 +273,35 @@ function getSymbol () {
   var symbolURL = 'https://financialmodelingprep.com/api/v3/stock/list?apikey=9f9b6e858376323424e765f45067c09e' 
   var mystocksymbol;
 
-  console.log(mystockname);
 
   fetch(symbolURL)
 .then(function (response) {
   return response.json()
 })
 .then(function (data) {
+
+
   for(let i=0; i<data.length; i++){
       if(mystockname == data[i].name){
         mystocksymbol = data[i].symbol;
-        if(mystocksymbol !== null) {
-          console.log(mystocksymbol);
-          mystockAPI(mystocksymbol);
 
+        if(mystocksymbol !== null) {
+          mystockAPI(mystocksymbol);
           break;
         }
       }
+
+      // //autofill : need test
+      // $( function() {
+      //   var availablestocks = [];
+      //   for(let i=0; i<data.length; i++) {
+      //   availablestocks = data[i].name;
+      //   }
+      //   console.log(availablestocks);
+      //   $('.stockinput').autocomplete({
+      //     source: availablestocks
+      //   });
+      // } );
   } 
 })
 
@@ -324,24 +341,28 @@ fetch(mystockURL)
       mystockCloseprice.setAttribute('style', 'color: white')
       mystockCloseprice.textContent = 'Close Price : ' + data.historical[i].close;
   
-      var pricechange = document.createElement('span');
-      pricechange.textContent = data.historical[i].changePercent + '(%) change';
+      var pricechange = document.createElement('p');
+      pricechange.textContent = data.historical[i].change + '('+ data.historical[i].changePercent + '%)';
 
-
-      if(data.historical[i].changePercent>0) {
-        pricechange.setAttribute('style', 'background-color: red; color:white')
-      } else if(data.historical[i].changePercent<0) {
-        pricechange.setAttribute('style', 'background-color: blue; color:white')
-     }
-
-     mystockdiv.append(mystockTitle);
-    mystockdiv.append(mystockCloseprice)
-    mystockdiv.append(pricechange);
+      mystockdiv.append(mystockTitle);
+      mystockdiv.append(mystockCloseprice)
+      mystockdiv.append(pricechange);
   
+      if(data.historical[i].changePercent>0) {
+        pricechange.setAttribute('style', 'color:red')
+        var up = document.createElement('span');
+        up.innerHTML = '🔺';
+        pricechange.append(up);
+      } else if(data.historical[i].changePercent<0) {
+        pricechange.setAttribute('style', 'color:blue')
+        var down = document.createElement('span');
+        down.innerHTML = '🔻';
+        pricechange.append(down);
+      }
+
+
     } 
-  // else {
-  //   console.log('not bussiness day')
-  // }
+
 }
 })
 }

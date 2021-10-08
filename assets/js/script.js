@@ -199,10 +199,10 @@ $("#closeDialog").click(function()
 
 //stock API
 
-
+var FMPapikey = '65a7a307c49a31bc405d2356c9e065ea';
 function stockAPI (date) {
 
-  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey=9f9b6e858376323424e765f45067c09e';
+  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+FMPapikey;
   
 
 fetch(stockURL)
@@ -270,7 +270,7 @@ for(let i=0; i<data.historical.length; i++) {
 function getSymbol () {
 
     
-  var symbolURL = 'https://financialmodelingprep.com/api/v3/stock/list?apikey=9f9b6e858376323424e765f45067c09e' 
+  var symbolURL = 'https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=10000000000&volumeMoreThan=100000&exchange=NASDAQ,nyse,amex&apikey=' +FMPapikey; 
   var mystocksymbol;
 
 
@@ -282,7 +282,7 @@ function getSymbol () {
 
 
   for(let i=0; i<data.length; i++){
-      if(mystockname == data[i].name){
+      if(mystockname == data[i].companyName){
         mystocksymbol = data[i].symbol;
 
         if(mystocksymbol !== null) {
@@ -291,17 +291,18 @@ function getSymbol () {
         }
       }
 
-      // //autofill : need test
-      // $( function() {
-      //   var availablestocks = [];
-      //   for(let i=0; i<data.length; i++) {
-      //   availablestocks = data[i].name;
-      //   }
-      //   console.log(availablestocks);
-      //   $('.stockinput').autocomplete({
-      //     source: availablestocks
-      //   });
-      // } );
+      //autofill : need test
+      
+
+        var availablestocks = [];
+        for(let i=0; i<data.length; i++) {
+        availablestocks.push(data[i].companyName);
+        }
+
+        $('.stockinput').autocomplete({
+          source: availablestocks
+        });
+
   } 
 })
 
@@ -313,14 +314,14 @@ function getSymbol () {
 
 function mystockAPI (symbol) {
 
-  var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + symbol +'?apikey=9f9b6e858376323424e765f45067c09e';
+  var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + symbol +'?apikey=' +FMPapikey;
 
 fetch(mystockURL)
 .then(function (response) {
   return response.json()
 })
 .then(function (data) {
-  console.log(data.historical)
+  // console.log(data.historical)
 
 
   for(let i=0; i<data.historical.length; i++) {

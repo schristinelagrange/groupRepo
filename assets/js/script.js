@@ -181,12 +181,9 @@ if($('.stockAPIdiv') == null) {
 }
 
 //call mystockAPI
-if($('.mystockAPIdiv') == null) {
+
   getSymbol();
-} else {
-  $('.mystockAPIdiv').remove();
-  getSymbol();
-}
+
 
 }))
 
@@ -261,13 +258,15 @@ for(let i=0; i<data.historical.length; i++) {
 
   $('.stocksavebtn').on('click', function saveStock() {
     localStorage.setItem('mystock', $('.stockinput').val());
+    $('.stockinput').val('');
     getSymbol();
 
   })
 
-  var mystockname = localStorage.getItem('mystock');
+
 
 function getSymbol () {
+  var mystockname = localStorage.getItem('mystock');
 
     
   var symbolURL = 'https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=10000000000&volumeMoreThan=100000&exchange=NASDAQ,nyse,amex&apikey=' +FMPapikey; 
@@ -280,29 +279,27 @@ function getSymbol () {
 })
 .then(function (data) {
 
+  //autofill
+  var availablestocks = [];
+  for(let i=0; i<data.length; i++) {
+  availablestocks.push(data[i].companyName);
+  }
+
+  $('.stockinput').autocomplete({
+    source: availablestocks
+  });
 
   for(let i=0; i<data.length; i++){
       if(mystockname == data[i].companyName){
         mystocksymbol = data[i].symbol;
-
-        if(mystocksymbol !== null) {
-          mystockAPI(mystocksymbol);
-          break;
+        if($('.mystockAPIdiv') == null) {
+          mystockAPI(mystocksymbol, mystockname);
+        } else {
+          $('.mystockAPIdiv').remove();
+          mystockAPI(mystocksymbol, mystockname);
         }
+
       }
-
-      //autofill : need test
-      
-
-        var availablestocks = [];
-        for(let i=0; i<data.length; i++) {
-        availablestocks.push(data[i].companyName);
-        }
-
-        $('.stockinput').autocomplete({
-          source: availablestocks
-        });
-
   } 
 })
 
@@ -312,7 +309,9 @@ function getSymbol () {
 
 //mystockAPI
 
-function mystockAPI (symbol) {
+function mystockAPI (symbol, mystockname) {
+
+  
 
   var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + symbol +'?apikey=' +FMPapikey;
 

@@ -5,9 +5,10 @@ let weather;
 let pulledData = JSON.parse(localStorage.getItem("data"));
 let data = (pulledData !== null) ? pulledData : {};
 let newEvent = [];
-
+//get weather call
 function getWeather()
 {
+  //if weather is already an object, the call has been done. so return weather as the promise
   if(typeof weather === 'object')
   {
     return Promise.resolve(weather)
@@ -28,8 +29,10 @@ function getWeather()
     });
     
 }
+//gets the url based on your current location.
 function getUrl()
 {
+  //creates a promise function and returns the url, we are able to use .then in the function call to then call getWeather knowing the url has been created.
   return new Promise(function(resolve, reject)
   {
     
@@ -42,6 +45,7 @@ function getUrl()
     },reject)
   })
 }
+//renders the weather to the dialog
 function renderWeather(event)
 {
   for(let i = 0; i < 7; i++)
@@ -55,6 +59,7 @@ function renderWeather(event)
     }
   }
 }
+//renders the stored events to the dialog
 function renderEvents()
 {
   let dialogHeaderContent = $("#dialogHeaderContent").text()
@@ -66,7 +71,7 @@ function renderEvents()
   $("#eventData").html(data[dialogHeaderContent])
   
 }
-
+//makes the dialog visable, and shrinks the calendar to fit it all on the screen, shows the date in the top of the dialog
 function showDialog(event)
 {
   $("#eventData").html('')
@@ -78,6 +83,7 @@ function showDialog(event)
 }
 const date = new Date();
 console.log(date);
+//renders the calendar to the page
 const renderCalendar = () => {
   date.setDate(1);
   const monthDays = document.querySelector(".days");
@@ -112,9 +118,11 @@ const renderCalendar = () => {
     "November",
     "December",
   ];
+  //sets the month and the string date to the top of the calendar
   document.querySelector(".date h1").innerHTML = months[date.getMonth()];
   document.querySelector(".date p").innerHTML = new Date().toDateString();
   let days = "";
+  //loops threw and creates the calender day divs
   for (let x = firstDayIndex; x > 0; x--) {
     days += `<div class="prev-date">${prevLastDay - x + 1}</div>`;
   }
@@ -135,6 +143,7 @@ const renderCalendar = () => {
     monthDays.innerHTML = days;
   }
 };
+//event listeners for prev and next month. adds 1 or subtracts 1 fromt the current month, then calls render calendar again
 document.querySelector(".prev").addEventListener("click", () => {
   date.setMonth(date.getMonth() - 1);
   renderCalendar();
@@ -144,7 +153,7 @@ document.querySelector(".next").addEventListener("click", () => {
   renderCalendar();
 });
 renderCalendar();
-
+//closes the dialog window and returns the calendar to full screen
 $("#closeDialog").click(function()
 {
   $("#calenderDialog").css({'visibility': 'hidden'})
@@ -152,16 +161,27 @@ $("#closeDialog").click(function()
   $(".container").css({"justify-content": "center"})
 })
 
+
+//closes dialog and returns calendar to full screen
+$("#closeDialog").click(function()
+{
+  $("#calenderDialog").css({'visibility': 'hidden'})
+  $(".calendar").css("width", "90%")
+  $(".container").css({"justify-content": "center"})
+})
+//opens daialog, calls get weather, and stock api
 $( document ).on('click','.calenderDays',(function(event)
 {
-  console.log(event)
-  $("#calenderDialog").css({'visibility': 'visible', 'margin-right':'3%'})
-  $(".calendar").css("width", "60%")
-  $(".container").css({"justify-content": "normal", "padding-left":"5%"})
-  $("#dialogHeaderContent").text(event.target.id);
-
-
-//call stockAPI
+  newEvent = []
+  showDialog(event)
+  getWeather()
+  .then(renderWeather)
+  .catch(function(error){
+    console.log(error)
+  })
+  let dialogHeaderContent = $("#dialogHeaderContent").text()
+  $("#eventData").html(data[dialogHeaderContent])
+  //call stockAPI
 
 var date = event.target.id;
 
@@ -178,26 +198,6 @@ if($('.stockAPIdiv') == null) {
   getSymbol();
 
 
-}))
-
-$("#closeDialog").click(function()
-{
-  $("#calenderDialog").css({'visibility': 'hidden'})
-  $(".calendar").css("width", "90%")
-  $(".container").css({"justify-content": "center"})
-})
-
-$( document ).on('click','.calenderDays',(function(event)
-{
-  newEvent = []
-  showDialog(event)
-  getWeather()
-  .then(renderWeather)
-  .catch(function(error){
-    console.log(error)
-  })
-  let dialogHeaderContent = $("#dialogHeaderContent").text()
-  $("#eventData").html(data[dialogHeaderContent])
 }))
 
 $("#saveEvent").click(function(event)
@@ -218,8 +218,8 @@ $("#deleteData").click(function()
 
 
 //stock API
-
-var FMPapikey = '65a7a307c49a31bc405d2356c9e065ea';
+let travisAPIKey = '4e011863df1e09d29721886272ffe3a4';
+var FMPapikey = '4e011863df1e09d29721886272ffe3a4';
 function stockAPI (date) {
 
   var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+FMPapikey;

@@ -199,11 +199,14 @@ $( document ).on('click','.calenderDays',(function(event)
   let dialogHeaderContent = $("#dialogHeaderContent").text()
   $("#eventData").html(data[dialogHeaderContent])
 }))
-$("#infoForm").submit(function(event)
+
+$("#saveEvent").click(function(event)
 {
+  console.log('subbmited')
   event.preventDefault()
   renderEvents()
 })
+
 $("#deleteData").click(function()
 {
   let dialogHeaderContent = $("#dialogHeaderContent").text()

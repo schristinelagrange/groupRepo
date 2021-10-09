@@ -219,7 +219,8 @@ $("#deleteData").click(function()
 
 //stock API
 let travisAPIKey = '4e011863df1e09d29721886272ffe3a4';
-var FMPapikey = '4e011863df1e09d29721886272ffe3a4';
+var FMPapikey =    '9f9b6e858376323424e765f45067c09e';
+// another spare key '65a7a307c49a31bc405d2356c9e065ea'
 
 function stockAPI (date) {
 

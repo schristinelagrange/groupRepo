@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calendar</title>
+    <link type="text/css" rel="stylesheet" href="./assets/materialize/css/materialize.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link
@@ -24,9 +26,10 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
   ></script>
   </head>
-  <body>
+  <body class="blue lighten-4">
+  
     <div class="container">
-      <div class="calendar">
+      <div class="calendar blue-grey">
         <div class="month">
           <i class="fas fa-angle-left prev"></i>
           <div class="date">
@@ -50,18 +53,20 @@
     <form id="infoForm">
       <div id="calenderDialog">
         <header id=dialogHeader>
-        <input type="button" value="Close" id="closeDialog">
+          
+          <a class="waves-effect waves-light btn-small" id="closeDialog"><i class="large material-icons">close</i></a>
         <h1 id='dialogHeaderContent'></h1>
         </header>
         <div id=dialogContent>
-          <input type="text" id="eventText" placeholder="Enter Event" autocomplete="off">
-          <button id="saveEvent">Save Event</button>
+          <input type="text" id="eventText" class="white-text" placeholder="Enter Event" autocomplete="off">
+         
+          <a class="waves-effect waves-light btn-small" id="saveEvent"><i class="material-icons">add</i></a>
           <div id="weatherInfo"></div>
           <div id="eventData"> </div>
           <button type="button" id="deleteData">Delete Tasks</button>
           <div class="input-group mb-3" id="searchStock">
-            <input type="text" class="form-control stockinput" placeholder="Enter Mystock" aria-label="Enter Mystock" aria-describedby="button-addon2">
-            <button class="stocksavebtn btn btn-outline-secondary" type="button" id="button-addon2">Save</button>
+          <input type="text" class="form-control stockinput white-text" placeholder="Enter Mystock" aria-label="Enter Mystock" aria-describedby="button-addon2">
+          <a class="waves-effect waves-light btn-small stocksavebtn" id="button-addon2"><i class="material-icons">add</i></a>
           </div>
         </div>
         
@@ -78,5 +83,7 @@
     <script src="./assets/js/script.js"></script>
 
 
-</script></body>
+</script>
+</body>
+
 </html>

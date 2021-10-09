@@ -219,7 +219,7 @@ $("#deleteData").click(function()
 
 //stock API
 
-var FMPapikey = '65a7a307c49a31bc405d2356c9e065ea';
+var FMPapikey = '9f9b6e858376323424e765f45067c09e';
 function stockAPI (date) {
 
   var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+FMPapikey;

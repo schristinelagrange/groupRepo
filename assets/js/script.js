@@ -166,11 +166,206 @@ $( document ).on('click','.calenderDays',(function(event)
   $(".calendar").css("width", "60%")
   $(".container").css({"justify-content": "normal", "padding-left":"5%"})
   $("#dialogHeaderContent").text(event.target.id);
-  console.log(moment(event.target.id, "MM/DD/YYYY").format('X'))
+
+
+//call stockAPI
+
+var date = event.target.id;
+
+
+if($('.stockAPIdiv') == null) {
+  stockAPI(date);
+} else {
+  $('.stockAPIdiv').remove();
+  stockAPI(date);
+}
+
+//call mystockAPI
+
+  getSymbol();
+
+
 }))
 
+$("#closeDialog").click(function()
+{
+  $("#calenderDialog").css({'visibility': 'hidden'})
+  $(".calendar").css("width", "90%")
+  $(".container").css({"justify-content": "center"})
+})
+
+//stock API
+
+var FMPapikey = '65a7a307c49a31bc405d2356c9e065ea';
+function stockAPI (date) {
+
+  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+FMPapikey;
+  
+
+fetch(stockURL)
+.then(function (response) {
+  return response.json()
+})
+.then(function (data) {
+  // console.log(data.historical)
 
 
+for(let i=0; i<data.historical.length; i++) {
+  var dateform = moment(data.historical[i].date).format('M/D/YYYY');
+
+  if(date == dateform) {
+    var spindexdiv = document.createElement('div');
+    spindexdiv.classList = "stockAPIdiv";
+    $('#dialogContent').append(spindexdiv);
+
+    var sptitle = document.createElement('h3')
+    sptitle.textContent = "S&P index"
+    sptitle.setAttribute('style', 'color: white');
+    spindexdiv.append(sptitle);
+
+    var closeprice = document.createElement('p');
+    closeprice.setAttribute('style', 'color: white')
+    closeprice.textContent = 'Close Price : ' + data.historical[i].close;
+
+    var pricechange = document.createElement('p');
+    pricechange.textContent = data.historical[i].change + '('+ data.historical[i].changePercent + '%)';
+
+    if(data.historical[i].changePercent>0) {
+      pricechange.setAttribute('style', 'color:red')
+      var up = document.createElement('span');
+      up.innerHTML = '🔺';
+      pricechange.append(up);
+    } else if(data.historical[i].changePercent<0) {
+      pricechange.setAttribute('style', 'color:blue')
+      var down = document.createElement('span');
+      down.innerHTML = '🔻';
+      pricechange.append(down);
+    }
+
+    spindexdiv.append(closeprice)
+    spindexdiv.append(pricechange);
+
+  } 
+}
+
+})
+
+
+}
+
+// my stock submit (auto fill) -> get Symbol from the input
+
+
+  $('.stocksavebtn').on('click', function saveStock() {
+    localStorage.setItem('mystock', $('.stockinput').val());
+    $('.stockinput').val('');
+    getSymbol();
+
+  })
+
+
+
+function getSymbol () {
+  var mystockname = localStorage.getItem('mystock');
+
+    
+  var symbolURL = 'https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=10000000000&volumeMoreThan=100000&exchange=NASDAQ,nyse,amex&apikey=' +FMPapikey; 
+  var mystocksymbol;
+
+
+  fetch(symbolURL)
+.then(function (response) {
+  return response.json()
+})
+.then(function (data) {
+
+  //autofill
+  var availablestocks = [];
+  for(let i=0; i<data.length; i++) {
+  availablestocks.push(data[i].companyName);
+  }
+
+  $('.stockinput').autocomplete({
+    source: availablestocks
+  });
+
+  for(let i=0; i<data.length; i++){
+      if(mystockname == data[i].companyName){
+        mystocksymbol = data[i].symbol;
+        if($('.mystockAPIdiv') == null) {
+          mystockAPI(mystocksymbol, mystockname);
+        } else {
+          $('.mystockAPIdiv').remove();
+          mystockAPI(mystocksymbol, mystockname);
+        }
+
+      }
+  } 
+})
+
+
+}
+
+
+//mystockAPI
+
+function mystockAPI (symbol, mystockname) {
+
+  
+
+  var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + symbol +'?apikey=' +FMPapikey;
+
+fetch(mystockURL)
+.then(function (response) {
+  return response.json()
+})
+.then(function (data) {
+  // console.log(data.historical)
+
+
+  for(let i=0; i<data.historical.length; i++) {
+    var dateform = moment(data.historical[i].date).format('M/D/YYYY');
+    var date = $('#dialogHeaderContent').text();
+
+    if(date == dateform) {
+      var mystockdiv = document.createElement('div');
+      mystockdiv.classList = "mystockAPIdiv";
+      $('#dialogContent').append(mystockdiv);
+  
+      var mystockTitle = document.createElement('h3')
+      mystockTitle.textContent = mystockname +"'s price"
+      mystockTitle.setAttribute('style', 'color: white');
+
+  
+      var mystockCloseprice = document.createElement('p');
+      mystockCloseprice.setAttribute('style', 'color: white')
+      mystockCloseprice.textContent = 'Close Price : ' + data.historical[i].close;
+  
+      var pricechange = document.createElement('p');
+      pricechange.textContent = data.historical[i].change + '('+ data.historical[i].changePercent + '%)';
+
+      mystockdiv.append(mystockTitle);
+      mystockdiv.append(mystockCloseprice)
+      mystockdiv.append(pricechange);
+  
+      if(data.historical[i].changePercent>0) {
+        pricechange.setAttribute('style', 'color:red')
+        var up = document.createElement('span');
+        up.innerHTML = '🔺';
+        pricechange.append(up);
+      } else if(data.historical[i].changePercent<0) {
+        pricechange.setAttribute('style', 'color:blue')
+        var down = document.createElement('span');
+        down.innerHTML = '🔻';
+        pricechange.append(down);
+      }
+
+
+    } 
+
+}
+})
+}
 
 
 //`https://api.openweathermap.org/data/2.5/onecall?lat=34.5308634&lon=-82.6504161&exclude=hourly,minutely&units=imperial&appid=9abc24e2bd82a06cffa0711c49b6f93b`

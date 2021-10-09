@@ -6,64 +6,6 @@ let pulledData = JSON.parse(localStorage.getItem("data"));
 let data = (pulledData !== null) ? pulledData : {};
 let newEvent = [];
 
-
-
-
-
-
-function getWeather(url)
-{
-  console.log(url  + "this is url");
-  fetch(url)
-    .then(function(responce)
-    {
-      return responce.json();
-    })
-    .then(function(data)
-    {
-      console.log(data);
-      weather = data;
-    })
-}
-$( document ).ready(function()
-{
-  window.navigator.geolocation.getCurrentPosition(function(position)
-  {
-    lat = position.coords.latitude;
-    lon = position.coords.longitude;
-    url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=imperial&appid=9abc24e2bd82a06cffa0711c49b6f93b`;
-    console.log(url);
-    getWeather(url);
-    console.log(weather + "this is weather")
-  })
-
-})
-
-function renderWeather(event)
-{
-  for(let i = 0; i < 7; i++)
-  {
-    console.log(moment(event.target.id, "MM/DD/YYYY").format('X'))
-  }
-}
-
-
-
-
-fetch('https://calendarific.com/api/v2/holidays?&api_key=1f4dc4481a87c2b13ef01f67da9c0f7b95dbdac8&country=US&year=2021&type=national')
-.then(function(responce)
-{
-	return responce.json();
-})
-.then(function(responce)
-{
-	console.log(responce)
-})
-
-
-
-
-
 function getWeather()
 {
   if(typeof weather === 'object')
@@ -257,11 +199,14 @@ $( document ).on('click','.calenderDays',(function(event)
   let dialogHeaderContent = $("#dialogHeaderContent").text()
   $("#eventData").html(data[dialogHeaderContent])
 }))
-$("#infoForm").submit(function(event)
+
+$("#saveEvent").click(function(event)
 {
+  console.log('subbmited')
   event.preventDefault()
   renderEvents()
 })
+
 $("#deleteData").click(function()
 {
   let dialogHeaderContent = $("#dialogHeaderContent").text()

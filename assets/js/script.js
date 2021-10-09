@@ -220,6 +220,7 @@ $("#deleteData").click(function()
 //stock API
 let travisAPIKey = '4e011863df1e09d29721886272ffe3a4';
 var FMPapikey = '4e011863df1e09d29721886272ffe3a4';
+
 function stockAPI (date) {
 
   var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+FMPapikey;

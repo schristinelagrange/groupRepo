@@ -280,8 +280,8 @@ for(let i=0; i<data.historical.length; i++) {
 
 
   $('.stocksavebtn').on('click', function saveStock() {
-    localStorage.setItem('mystock', $('.stockinput').val());
-    $('.stockinput').val('');
+    localStorage.setItem('mystock', $('#stockinput').val());
+    $('#stockinput').val('');
     getSymbol();
 
   })
@@ -308,7 +308,7 @@ function getSymbol () {
   availablestocks.push(data[i].companyName);
   }
 
-  $('.stockinput').autocomplete({
+  $('#stockinput').autocomplete({
     source: availablestocks
   });
 

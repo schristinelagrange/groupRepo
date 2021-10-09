@@ -153,14 +153,6 @@ document.querySelector(".next").addEventListener("click", () => {
   renderCalendar();
 });
 renderCalendar();
-//closes the dialog window and returns the calendar to full screen
-$("#closeDialog").click(function()
-{
-  $("#calenderDialog").css({'visibility': 'hidden'})
-  $(".calendar").css("width", "90%")
-  $(".container").css({"justify-content": "center"})
-})
-
 
 //closes dialog and returns calendar to full screen
 $("#closeDialog").click(function()

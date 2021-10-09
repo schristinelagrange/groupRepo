@@ -143,3 +143,8 @@
     margin: 5px;
     padding: 5px 0;
   }
+
+  #weatherInfo, #eventData{
+    font-size: 20px;
+    color: white;
+  }

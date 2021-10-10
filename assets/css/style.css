@@ -12,7 +12,6 @@
   .container {
     width: 100%;
     height: 100vh;
-    background-color: lightblue;
     color: black;
     display: flex;
     justify-content: center;
@@ -22,7 +21,7 @@
   .calendar {
     width: 90%;
     height: 90%;
-    background-color: #222227;
+    
     box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4);
   }
   
@@ -109,7 +108,8 @@
   }
   
   .today {
-    background-color: #167e56!important;
+    background-color: #089481!important;
+    
   }
 
   #closeDialog{
@@ -124,7 +124,7 @@
     position: absolute;
     z-index: 100;
     right: 0px; 
-    top: 5%; 
+    top: 5%;
     width: 30%; 
     height: 90%; 
     visibility: hidden;

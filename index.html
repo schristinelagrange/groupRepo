@@ -26,10 +26,14 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
   ></script>
   </head>
-  <body class="blue lighten-4">
-  
-    <div class="container">
-      <div class="calendar blue-grey">
+  <body class="red lighten-3">
+    <nav>
+      <div class="nav-wrapper">
+        <a class="brand-logo center">Life Planner</a>
+      </div>
+    </nav>
+    <div class="container black-text">
+      <div class="calendar">
         <div class="month">
           <i class="fas fa-angle-left prev"></i>
           <div class="date">
@@ -50,20 +54,19 @@
         <div class="days"></div>
       </div>
     </div>
-    <form id="infoForm">
-      <div id="calenderDialog">
+    <form id="infoForm" class="container">
+      <div id="calenderDialog" class="z-depth-5">
         <header id=dialogHeader>
           
           <a class="waves-effect waves-light btn-small" id="closeDialog"><i class="large material-icons">close</i></a>
         <h1 id='dialogHeaderContent'></h1>
         </header>
-        <div id=dialogContent>
+        <div id=dialogContent class="blue-grey">
           <input type="text" id="eventText" class="white-text" placeholder="Enter Event" autocomplete="off">
-         
           <a class="waves-effect waves-light btn-small" id="saveEvent"><i class="material-icons">add</i></a>
           <div id="weatherInfo"></div>
           <div id="eventData"> </div>
-          <button type="button" id="deleteData">Delete Tasks</button>
+          <a class="waves-effect waves-light btn-small" id="deleteData">Delete Tasks</a>
           <div class="input-group mb-3" id="searchStock">
           <input type="text" class="form-control stockinput white-text" placeholder="Enter Mystock" aria-label="Enter Mystock" aria-describedby="button-addon2">
           <a class="waves-effect waves-light btn-small stocksavebtn" id="button-addon2"><i class="material-icons">add</i></a>
@@ -84,6 +87,22 @@
 
 
 </script>
+<footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h3 class="white-text">Life Planner</h3>
+        <p class="grey-text text-lighten-4">A monthly calendar to organize you life with. Keep track of the weather based on your location, your tasks, and favorite stocks.</p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h3 class="white-text">Links</h3>
+        <ul>
+          <li><a class="grey-text text-lighten-3" href="https://github.com/schristinelagrange/lifePlanner">GitHub Page</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
 </body>
 
 </html>

@@ -243,10 +243,10 @@ for(let i=0; i<data.historical.length; i++) {
 
     var closeprice = document.createElement('p');
     closeprice.setAttribute('style', 'color: white')
-    closeprice.textContent = 'Close Price : ' + data.historical[i].close;
+    closeprice.textContent = 'Close Price : ' + data.historical[i].close.toFixed(2);
 
     var pricechange = document.createElement('p');
-    pricechange.textContent = data.historical[i].change + '('+ data.historical[i].changePercent + '%)';
+    pricechange.textContent = data.historical[i].change.toFixed(2) + '('+ data.historical[i].changePercent.toFixed(2) + '%)';
 
     if(data.historical[i].changePercent>0) {
       pricechange.setAttribute('style', 'color:red')
@@ -266,6 +266,32 @@ for(let i=0; i<data.historical.length; i++) {
   } 
 }
 
+})
+
+  var todaystockURL = 'https://financialmodelingprep.com/api/v3/quote-short/%5EGSPC?apikey=' +FMPapikey;
+fetch(todaystockURL)
+.then(function(response) {
+  return response.json()
+})
+.then(function (data) {
+  if(date == moment().format('M/D/YYYY')) {
+    console.log(data)
+
+    var todayIndexdiv = document.createElement('div');
+    todayIndexdiv.classList = "stockAPIdiv";
+    $('#dialogContent').append(todayIndexdiv);
+
+    var sptitle = document.createElement('h3')
+    sptitle.textContent = "S&P index"
+    sptitle.setAttribute('style', 'color: white');
+    todayIndexdiv.append(sptitle);
+
+    var closeprice = document.createElement('p');
+    closeprice.setAttribute('style', 'color: white')
+    closeprice.textContent = 'Real-time Price : ' + data[0].price.toFixed(2);
+
+    todayIndexdiv.append(closeprice)
+  }
 })
 
 
@@ -329,9 +355,7 @@ function getSymbol () {
 
 function mystockAPI (symbol, mystockname) {
 
-  
-
-  var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + symbol +'?apikey=' +FMPapikey;
+var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + symbol +'?apikey=' +FMPapikey;
 
 fetch(mystockURL)
 .then(function (response) {
@@ -357,10 +381,10 @@ fetch(mystockURL)
   
       var mystockCloseprice = document.createElement('p');
       mystockCloseprice.setAttribute('style', 'color: white')
-      mystockCloseprice.textContent = 'Close Price : ' + data.historical[i].close;
+      mystockCloseprice.textContent = 'Close Price : ' + data.historical[i].close.toFixed(2);
   
       var pricechange = document.createElement('p');
-      pricechange.textContent = data.historical[i].change + '('+ data.historical[i].changePercent + '%)';
+      pricechange.textContent = data.historical[i].change.toFixed(2) + '('+ data.historical[i].changePercent.toFixed(2) + '%)';
 
       mystockdiv.append(mystockTitle);
       mystockdiv.append(mystockCloseprice)
@@ -383,6 +407,36 @@ fetch(mystockURL)
 
 }
 })
+
+var todaystockURL = 'https://financialmodelingprep.com/api/v3/quote-short/'+symbol+'?apikey=' +FMPapikey;
+
+
+fetch(todaystockURL)
+.then(function(response) {
+  return response.json()
+})
+.then(function (data) {
+
+  var date = $('#dialogHeaderContent').text();
+
+  if(date == moment().format('M/D/YYYY')) {
+    console.log(data)
+
+    var todayMystockDiv = document.createElement('div');
+    todayMystockDiv.classList = "mystockAPIdiv";
+    $('#dialogContent').append(todayMystockDiv);
+
+    var mystockTitle = document.createElement('h3')
+    mystockTitle.textContent = mystockname +"'s price"
+    mystockTitle.setAttribute('style', 'color: white');
+    todayMystockDiv.append(mystockTitle);
+
+    var mystockPrice = document.createElement('p');
+    mystockPrice.setAttribute('style', 'color: white')
+    mystockPrice.textContent = 'Real-time Price : ' + data[0].price.toFixed(2);
+
+    todayMystockDiv.append(mystockPrice)
+  }
+})
+
 }
-
-

@@ -135,7 +135,8 @@
   }
   #dialogContent{
     background-color: #262626 ;
-    height: 90%;
+    height: 88%;
+    overflow: auto;
   }
 
   #eventText{

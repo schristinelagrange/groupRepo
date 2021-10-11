@@ -158,7 +158,7 @@ renderCalendar();
 $("#closeDialog").click(function()
 {
   $("#calenderDialog").css({'visibility': 'hidden'})
-  $(".calendar").css("width", "90%")
+  
   $(".container").css({"justify-content": "center"})
 })
 //opens daialog, calls get weather, and stock api
@@ -215,9 +215,10 @@ $("#deleteData").click(function()
 var FMPapikey =    '4e011863df1e09d29721886272ffe3a4';
 // another spare key '65a7a307c49a31bc405d2356c9e065ea'
 
+
 function stockAPI (date) {
 
-  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+FMPapikey;
+  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+ christineKey;
   
 
 fetch(stockURL)

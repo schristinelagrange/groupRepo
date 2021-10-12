@@ -308,6 +308,7 @@ fetch(todaystockURL)
   return response.json()
 })
 .then(function (data) {
+  if ($('.mystockAPIdiv') == null) {
   if(date == moment().format('M/D/YYYY')) {
     console.log(data)
 
@@ -325,7 +326,7 @@ fetch(todaystockURL)
     closeprice.textContent = 'Real-time Price : ' + data[0].price.toFixed(2);
 
     todayIndexdiv.append(closeprice)
-  }
+  }}
 })
 
 
@@ -452,7 +453,7 @@ fetch(todaystockURL)
 .then(function (data) {
 
   var date = $('#dialogHeaderContent').text();
-
+  if ($('.mystockAPIdiv') == null) {
   if(date == moment().format('M/D/YYYY')) {
     console.log(data)
 
@@ -470,7 +471,7 @@ fetch(todaystockURL)
     mystockPrice.textContent = 'Real-time Price : ' + data[0].price.toFixed(2);
 
     todayMystockDiv.append(mystockPrice)
-  }
+  }}
 })
 
 }

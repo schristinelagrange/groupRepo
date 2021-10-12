@@ -161,7 +161,7 @@ footer a {
 }
 
 #eventDiv{
-  
+  display: flex;
 }
 
 

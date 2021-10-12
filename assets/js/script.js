@@ -94,13 +94,19 @@ function renderEvents()
 {
   let dialogHeaderContent = $("#dialogHeaderContent").text()
   let eventText = $("#eventText").val();
-  newEvent.push(`<div id="eventDiv"><p>${eventText}</p><input type="button" value = "delete"></div>`)
+  newEvent.push(`<div id="eventDiv"><p>${eventText}</p><input type="button" class="delEvent" value = "delete"></div>`)
   $("#eventText").val("")
   data[dialogHeaderContent] = newEvent;
   localStorage.setItem('data', JSON.stringify(data))
   $("#eventData").html(data[dialogHeaderContent])
   
 }
+
+$( document ).on('click','.delEvent',function(event)
+{
+  console.log(event)
+  event.target.parentElement.innerHTML = '';
+})
 //makes the dialog visable, and shrinks the calendar to fit it all on the screen, shows the date in the top of the dialog
 function showDialog(event)
 {

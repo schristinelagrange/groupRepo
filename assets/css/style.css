@@ -160,8 +160,14 @@ footer a {
 
 }
 
-#eventDiv{
+.eventDiv{
+  position: relative;
   display: flex;
+  min-width: 100%;
+}
+.delEvent{
+  position: relative;
+  right:0;
 }
 
 

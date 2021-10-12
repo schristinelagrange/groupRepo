@@ -5,6 +5,35 @@ let weather;
 let pulledData = JSON.parse(localStorage.getItem("data"));
 let data = (pulledData !== null) ? pulledData : {};
 let newEvent = [];
+
+//call calendar api
+function getHolidays(event)
+{
+  fetch('https://calendarific.com/api/v2/holidays?&api_key=0304ab491c16d7aae9858fa131471a6febc6e8c6&country=US&year=2021&type=national')
+  .then(function(response)
+  {
+  	return response.json();
+  })
+  .then(function(response)
+  {
+  	console.log(response)
+    holidays = response
+
+    for(let i = 0; i < holidays.response.holidays.length; i++)
+    {
+      let day = holidays.response.holidays[i].date.datetime.day;
+      let month = holidays.response.holidays[i].date.datetime.month;
+      let year = holidays.response.holidays[i].date.datetime.year;
+      let date = month+"/"+day+"/"+year;
+      if(date == event.target.id)
+      {
+        $("#holidayInfo").text(holidays.response.holidays[i].name)
+        console.log(holidays.response.holidays[i].name)
+      }
+    }
+  })
+}
+
 //get weather call
 function getWeather()
 {
@@ -173,6 +202,7 @@ $( document ).on('click','.calenderDays',(function(event)
   })
   let dialogHeaderContent = $("#dialogHeaderContent").text()
   $("#eventData").html(data[dialogHeaderContent])
+  getHolidays(event)
   //call stockAPI
 
 var date = event.target.id;
@@ -218,7 +248,7 @@ var FMPapikey =    '4e011863df1e09d29721886272ffe3a4';
 
 function stockAPI (date) {
 
-  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+ christineKey;
+  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+ FMPapikey;
   
 
 fetch(stockURL)

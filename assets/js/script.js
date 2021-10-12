@@ -17,7 +17,6 @@ function getHolidays(event)
   })
   .then(function(response)
   {
-  	console.log(response)
     holidays = response
 
     for(let i = 0; i < holidays.response.holidays.length; i++)
@@ -29,7 +28,6 @@ function getHolidays(event)
       if(date == event.target.id)
       {
         $("#holidayInfo").text(holidays.response.holidays[i].name)
-        console.log(holidays.response.holidays[i].name)
       }
     }
   })
@@ -102,18 +100,21 @@ function renderEvents()
   $("#eventData").html(data[dialogHeaderContent])
   
 }
-
+//delete idividual events
 $( document ).on('click','.delEvent',function(event)
 {
   let targetDivContent = event.target.previousSibling.outerText;
   let targetDate = $("#dialogHeaderContent").text();
+  //find the index of the content we are deleting
   let dataIndex = data[targetDate].indexOf(`<div class="eventDiv" ><p>${targetDivContent}</p><input type="button" class="delEvent" value = "delete"></div>`);
-  if(dataIndex > 0)
+  //if the array is longer than 1, splice the array to remove the value wanting to be deleted
+  if(data[targetDate].length > 1)
   {
     data[targetDate].splice(dataIndex,1)
   }
   else
   {
+    //if the length is 1 just pop the last one off
     data[targetDate].pop()
   }
   localStorage.setItem('data', JSON.stringify(data))
@@ -130,28 +131,35 @@ function showDialog(event)
   $("#dialogHeaderContent").text(event.target.id);
 }
 const date = new Date();
-console.log(date);
+//console.log(date);
 //renders the calendar to the page
 const renderCalendar = () => {
   date.setDate(1);
+  console.log(date  + " date")
   const monthDays = document.querySelector(".days");
+  console.log(monthDays  + " monthdays")
   const lastDay = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
     0
   ).getDate();
+  console.log(lastDay  + " lastDay")
   const prevLastDay = new Date(
     date.getFullYear(),
     date.getMonth(),
     0
   ).getDate();
+  console.log(prevLastDay  + " prevlastday")
   const firstDayIndex = date.getDay();
+  console.log(firstDayIndex  + " firstDayIndex")
   const lastDayIndex = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
     0
   ).getDay();
+  console.log(lastDayIndex  + " lastDayIndex")
   const nextDays = 7 - lastDayIndex - 1;
+  console.log(nextDays  + " nextDays")
   const months = [
     "January",
     "February",
@@ -187,9 +195,16 @@ const renderCalendar = () => {
       days += `<div id=${month+1}/${i}/${year} class="calenderDays">${i}</div>`;
     }
   }
-  for (let j = 1; j <= nextDays; j++) {
-    days += `<div class="next-date">${j}</div>`;
+  if(nextDays === 0)
+  {
     monthDays.innerHTML = days;
+  }
+  else
+  {
+    for (let j = 1; j <= nextDays; j++) {
+      days += `<div class="next-date">${j}</div>`;
+      monthDays.innerHTML = days;
+    }
   }
 };
 //event listeners for prev and next month. adds 1 or subtracts 1 fromt the current month, then calls render calendar again
@@ -245,7 +260,6 @@ if($('.stockAPIdiv') == null) {
 
 $("#saveEvent").click(function(event)
 {
-  console.log('subbmited')
   event.preventDefault()
   renderEvents()
 })

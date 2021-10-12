@@ -55,7 +55,7 @@ function renderWeather(event)
     let weatherInfo = $("#weatherInfo")
     if(tempDate == dialogHeaderContent)
     {
-      weatherInfo.html(`<p><h7>Weather For Your Current Location</h7></p><p>High:${weather.daily[i].temp.max}</p><p>Wind:${weather.daily[i].wind_speed}</p><p>Humidity:${weather.daily[i].humidity}</p><p><img src=http://openweathermap.org/img/w/${weather.daily[i].weather[0].icon}.png></p>`)
+      weatherInfo.html(`<p><h7>Weather For Your Current Location</h7></p><p>High:${weather.daily[i].temp.max}</p><p>Wind:${weather.daily[i].wind_speed}</p><p>Humidity:${weather.daily[i].humidity}</p><p><img src=https://openweathermap.org/img/w/${weather.daily[i].weather[0].icon}.png></p>`)
     }
   }
 }
@@ -78,7 +78,7 @@ function showDialog(event)
   $("#weatherInfo").html('')
   $("#calenderDialog").css({'visibility': 'visible', 'margin-right':'3%'})
   $(".calendar").css("width", "60%")
-  $(".container").css({"justify-content": "normal", "padding-left":"5%"})
+  $(".container").css({"justify-content": "normal"})
   $("#dialogHeaderContent").text(event.target.id);
 }
 const date = new Date();
@@ -153,20 +153,12 @@ document.querySelector(".next").addEventListener("click", () => {
   renderCalendar();
 });
 renderCalendar();
-//closes the dialog window and returns the calendar to full screen
-$("#closeDialog").click(function()
-{
-  $("#calenderDialog").css({'visibility': 'hidden'})
-  $(".calendar").css("width", "90%")
-  $(".container").css({"justify-content": "center"})
-})
-
 
 //closes dialog and returns calendar to full screen
 $("#closeDialog").click(function()
 {
   $("#calenderDialog").css({'visibility': 'hidden'})
-  
+  $(".calendar").css("width", "100%")
   $(".container").css({"justify-content": "center"})
 })
 //opens daialog, calls get weather, and stock api
@@ -218,13 +210,14 @@ $("#deleteData").click(function()
 
 
 //stock API
-let travisAPIKey = '4e011863df1e09d29721886272ffe3a4';
-var FMPapikey =    '9f9b6e858376323424e765f45067c09e';
-let christineKey = '65a7a307c49a31bc405d2356c9e065ea';
+//spare key '4e011863df1e09d29721886272ffe3a4';
+//spare key '9f9b6e858376323424e765f45067c09e';
+var FMPapikey =    '4e011863df1e09d29721886272ffe3a4';
+// another spare key '65a7a307c49a31bc405d2356c9e065ea'
 
 function stockAPI (date) {
 
-  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+ christineKey;
+  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+FMPapikey;
   
 
 fetch(stockURL)
@@ -250,10 +243,10 @@ for(let i=0; i<data.historical.length; i++) {
 
     var closeprice = document.createElement('p');
     closeprice.setAttribute('style', 'color: white')
-    closeprice.textContent = 'Close Price : ' + data.historical[i].close;
+    closeprice.textContent = 'Close Price : ' + data.historical[i].close.toFixed(2);
 
     var pricechange = document.createElement('p');
-    pricechange.textContent = data.historical[i].change + '('+ data.historical[i].changePercent + '%)';
+    pricechange.textContent = data.historical[i].change.toFixed(2) + '('+ data.historical[i].changePercent.toFixed(2) + '%)';
 
     if(data.historical[i].changePercent>0) {
       pricechange.setAttribute('style', 'color:red')
@@ -273,6 +266,32 @@ for(let i=0; i<data.historical.length; i++) {
   } 
 }
 
+})
+
+  var todaystockURL = 'https://financialmodelingprep.com/api/v3/quote-short/%5EGSPC?apikey=' +FMPapikey;
+fetch(todaystockURL)
+.then(function(response) {
+  return response.json()
+})
+.then(function (data) {
+  if(date == moment().format('M/D/YYYY')) {
+    console.log(data)
+
+    var todayIndexdiv = document.createElement('div');
+    todayIndexdiv.classList = "stockAPIdiv";
+    $('#dialogContent').append(todayIndexdiv);
+
+    var sptitle = document.createElement('h3')
+    sptitle.textContent = "S&P index"
+    sptitle.setAttribute('style', 'color: white');
+    todayIndexdiv.append(sptitle);
+
+    var closeprice = document.createElement('p');
+    closeprice.setAttribute('style', 'color: white')
+    closeprice.textContent = 'Real-time Price : ' + data[0].price.toFixed(2);
+
+    todayIndexdiv.append(closeprice)
+  }
 })
 
 
@@ -336,9 +355,7 @@ function getSymbol () {
 
 function mystockAPI (symbol, mystockname) {
 
-  
-
-  var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + symbol +'?apikey=' +FMPapikey;
+var mystockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/' + symbol +'?apikey=' +FMPapikey;
 
 fetch(mystockURL)
 .then(function (response) {
@@ -364,10 +381,10 @@ fetch(mystockURL)
   
       var mystockCloseprice = document.createElement('p');
       mystockCloseprice.setAttribute('style', 'color: white')
-      mystockCloseprice.textContent = 'Close Price : ' + data.historical[i].close;
+      mystockCloseprice.textContent = 'Close Price : ' + data.historical[i].close.toFixed(2);
   
       var pricechange = document.createElement('p');
-      pricechange.textContent = data.historical[i].change + '('+ data.historical[i].changePercent + '%)';
+      pricechange.textContent = data.historical[i].change.toFixed(2) + '('+ data.historical[i].changePercent.toFixed(2) + '%)';
 
       mystockdiv.append(mystockTitle);
       mystockdiv.append(mystockCloseprice)
@@ -390,6 +407,36 @@ fetch(mystockURL)
 
 }
 })
+
+var todaystockURL = 'https://financialmodelingprep.com/api/v3/quote-short/'+symbol+'?apikey=' +FMPapikey;
+
+
+fetch(todaystockURL)
+.then(function(response) {
+  return response.json()
+})
+.then(function (data) {
+
+  var date = $('#dialogHeaderContent').text();
+
+  if(date == moment().format('M/D/YYYY')) {
+    console.log(data)
+
+    var todayMystockDiv = document.createElement('div');
+    todayMystockDiv.classList = "mystockAPIdiv";
+    $('#dialogContent').append(todayMystockDiv);
+
+    var mystockTitle = document.createElement('h3')
+    mystockTitle.textContent = mystockname +"'s price"
+    mystockTitle.setAttribute('style', 'color: white');
+    todayMystockDiv.append(mystockTitle);
+
+    var mystockPrice = document.createElement('p');
+    mystockPrice.setAttribute('style', 'color: white')
+    mystockPrice.textContent = 'Real-time Price : ' + data[0].price.toFixed(2);
+
+    todayMystockDiv.append(mystockPrice)
+  }
+})
+
 }
-
-

@@ -9,10 +9,10 @@
     font-size: 62.5%;
   }
   
-
   .calendar {
-    width: 90%;
+    
     height: 90%;
+    width: 100%;
   }
   
   .month {
@@ -49,7 +49,7 @@
     height: 5rem;
     padding: 0 0.4rem;
     display: flex;
-    align-items: center;
+    justify-content: center;
   }
   
   .weekdays div {
@@ -62,6 +62,7 @@
     align-items: center;
     text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     color: white;
+    margin: 0.3rem;
   }
   
   .days {
@@ -114,9 +115,9 @@
     position: absolute;
     z-index: 100;
     right: 0px; 
-    top: 6.5%;
+    top: 7%;
     width: 30%; 
-    height: 80%; 
+    height: 68%; 
     visibility: hidden;
   }
 
@@ -138,16 +139,6 @@
     color: white;
   }
 
-  body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-
-  main {
-    flex: 1 0 auto;
-  }
-
 footer p {
   font-size: 17px;
 
@@ -157,5 +148,3 @@ footer a {
   font-size: 17px;
 
 }
-
-

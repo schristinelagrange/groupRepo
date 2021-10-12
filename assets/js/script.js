@@ -92,7 +92,10 @@ function renderEvents()
 {
   let dialogHeaderContent = $("#dialogHeaderContent").text()
   let eventText = $("#eventText").val();
-  newEvent = data[dialogHeaderContent];
+  if(data[dialogHeaderContent])
+  {
+    newEvent = data[dialogHeaderContent];
+  }
   newEvent.push(`<div class="eventDiv" ><p>${eventText}</p><input type="button" class="delEvent" value = "delete"></div>`)
   $("#eventText").val("")
   data[dialogHeaderContent] = newEvent;

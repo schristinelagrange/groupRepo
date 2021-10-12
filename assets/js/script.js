@@ -193,7 +193,7 @@ $("#closeDialog").click(function()
 //opens daialog, calls get weather, and stock api
 $( document ).on('click','.calenderDays',(function(event)
 {
-  $("#holidayInfo").text("")
+  $("#holidayInfo").text(" ")
   newEvent = []
   showDialog(event)
   getWeather()

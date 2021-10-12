@@ -94,7 +94,7 @@ function renderEvents()
 {
   let dialogHeaderContent = $("#dialogHeaderContent").text()
   let eventText = $("#eventText").val();
-  newEvent.push(`<p>${eventText}</p>`)
+  newEvent.push(`<div id="eventDiv"><p>${eventText}</p><input type="button" value = "delete"></div>`)
   $("#eventText").val("")
   data[dialogHeaderContent] = newEvent;
   localStorage.setItem('data', JSON.stringify(data))

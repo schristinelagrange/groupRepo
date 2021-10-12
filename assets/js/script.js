@@ -130,7 +130,7 @@ function showDialog(event)
   $("#weatherInfo").html('')
   $("#calenderDialog").css({'visibility': 'visible', 'margin-right':'3%'})
   $(".calendar").css("width", "60%")
-  $(".container").css({"justify-content": "normal", "padding-left":"5%"})
+  $(".container").css({"justify-content": "normal"})
   $("#dialogHeaderContent").text(event.target.id);
 }
 const date = new Date();
@@ -225,7 +225,7 @@ renderCalendar();
 $("#closeDialog").click(function()
 {
   $("#calenderDialog").css({'visibility': 'hidden'})
-  
+  $(".calendar").css("width", "100%")
   $(".container").css({"justify-content": "center"})
 })
 //opens daialog, calls get weather, and stock api
@@ -287,6 +287,7 @@ var FMPapikey =    '9f9b6e858376323424e765f45067c09e';
 function stockAPI (date) {
 
   var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+ FMPapikey;
+
   
 
 fetch(stockURL)
@@ -361,6 +362,7 @@ fetch(todaystockURL)
     closeprice.textContent = 'Real-time Price : ' + data[0].price.toFixed(2);
 
     todayIndexdiv.append(closeprice)
+
   }}
 })
 
@@ -506,6 +508,7 @@ fetch(todaystockURL)
     mystockPrice.textContent = 'Real-time Price : ' + data[0].price.toFixed(2);
 
     todayMystockDiv.append(mystockPrice)
+
   }}
 })
 

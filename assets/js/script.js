@@ -5,6 +5,34 @@ let weather;
 let pulledData = JSON.parse(localStorage.getItem("data"));
 let data = (pulledData !== null) ? pulledData : {};
 let newEvent = [];
+let calendarYear;
+
+//call calendar api
+function getHolidays(event)
+{
+  fetch(`https://calendarific.com/api/v2/holidays?&api_key=0304ab491c16d7aae9858fa131471a6febc6e8c6&country=US&year=${calendarYear}&type=national`)
+  .then(function(response)
+  {
+  	return response.json();
+  })
+  .then(function(response)
+  {
+    holidays = response
+
+    for(let i = 0; i < holidays.response.holidays.length; i++)
+    {
+      let day = holidays.response.holidays[i].date.datetime.day;
+      let month = holidays.response.holidays[i].date.datetime.month;
+      let year = holidays.response.holidays[i].date.datetime.year;
+      let date = month+"/"+day+"/"+year;
+      if(date == event.target.id)
+      {
+        $("#holidayInfo").text(holidays.response.holidays[i].name)
+      }
+    }
+  })
+}
+
 //get weather call
 function getWeather()
 {
@@ -64,13 +92,37 @@ function renderEvents()
 {
   let dialogHeaderContent = $("#dialogHeaderContent").text()
   let eventText = $("#eventText").val();
-  newEvent.push(`<p>${eventText}</p>`)
+  if(data[dialogHeaderContent])
+  {
+    newEvent = data[dialogHeaderContent];
+  }
+  newEvent.push(`<div class="eventDiv" ><p>${eventText}</p><input type="button" class="delEvent" value = "delete"></div>`)
   $("#eventText").val("")
   data[dialogHeaderContent] = newEvent;
   localStorage.setItem('data', JSON.stringify(data))
   $("#eventData").html(data[dialogHeaderContent])
   
 }
+//delete idividual events
+$( document ).on('click','.delEvent',function(event)
+{
+  let targetDivContent = event.target.previousSibling.outerText;
+  let targetDate = $("#dialogHeaderContent").text();
+  //find the index of the content we are deleting
+  let dataIndex = data[targetDate].indexOf(`<div class="eventDiv" ><p>${targetDivContent}</p><input type="button" class="delEvent" value = "delete"></div>`);
+  //if the array is longer than 1, splice the array to remove the value wanting to be deleted
+  if(data[targetDate].length > 1)
+  {
+    data[targetDate].splice(dataIndex,1)
+  }
+  else
+  {
+    //if the length is 1 just pop the last one off
+    data[targetDate].pop()
+  }
+  localStorage.setItem('data', JSON.stringify(data))
+  $("#eventData").html(data[targetDate])
+})
 //makes the dialog visable, and shrinks the calendar to fit it all on the screen, shows the date in the top of the dialog
 function showDialog(event)
 {
@@ -82,28 +134,35 @@ function showDialog(event)
   $("#dialogHeaderContent").text(event.target.id);
 }
 const date = new Date();
-console.log(date);
+//console.log(date);
 //renders the calendar to the page
 const renderCalendar = () => {
   date.setDate(1);
+  console.log(date  + " date")
   const monthDays = document.querySelector(".days");
+  console.log(monthDays  + " monthdays")
   const lastDay = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
     0
   ).getDate();
+  console.log(lastDay  + " lastDay")
   const prevLastDay = new Date(
     date.getFullYear(),
     date.getMonth(),
     0
   ).getDate();
+  console.log(prevLastDay  + " prevlastday")
   const firstDayIndex = date.getDay();
+  console.log(firstDayIndex  + " firstDayIndex")
   const lastDayIndex = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
     0
   ).getDay();
+  console.log(lastDayIndex  + " lastDayIndex")
   const nextDays = 7 - lastDayIndex - 1;
+  console.log(nextDays  + " nextDays")
   const months = [
     "January",
     "February",
@@ -129,6 +188,7 @@ const renderCalendar = () => {
   for (let i = 1; i <= lastDay; i++) {
     let month = date.getMonth();
     let year = date.getFullYear();
+    calendarYear = year;
     if (
       i === new Date().getDate() &&
       date.getMonth() === new Date().getMonth()
@@ -138,9 +198,16 @@ const renderCalendar = () => {
       days += `<div id=${month+1}/${i}/${year} class="calenderDays">${i}</div>`;
     }
   }
-  for (let j = 1; j <= nextDays; j++) {
-    days += `<div class="next-date">${j}</div>`;
+  if(nextDays === 0)
+  {
     monthDays.innerHTML = days;
+  }
+  else
+  {
+    for (let j = 1; j <= nextDays; j++) {
+      days += `<div class="next-date">${j}</div>`;
+      monthDays.innerHTML = days;
+    }
   }
 };
 //event listeners for prev and next month. adds 1 or subtracts 1 fromt the current month, then calls render calendar again
@@ -164,6 +231,7 @@ $("#closeDialog").click(function()
 //opens daialog, calls get weather, and stock api
 $( document ).on('click','.calenderDays',(function(event)
 {
+  $("#holidayInfo").text(" ")
   newEvent = []
   showDialog(event)
   getWeather()
@@ -173,6 +241,7 @@ $( document ).on('click','.calenderDays',(function(event)
   })
   let dialogHeaderContent = $("#dialogHeaderContent").text()
   $("#eventData").html(data[dialogHeaderContent])
+  getHolidays(event)
   //call stockAPI
 
 var date = event.target.id;
@@ -194,7 +263,6 @@ if($('.stockAPIdiv') == null) {
 
 $("#saveEvent").click(function(event)
 {
-  console.log('subbmited')
   event.preventDefault()
   renderEvents()
 })
@@ -212,12 +280,14 @@ $("#deleteData").click(function()
 //stock API
 //spare key '4e011863df1e09d29721886272ffe3a4';
 //spare key '9f9b6e858376323424e765f45067c09e';
-var FMPapikey =    '4e011863df1e09d29721886272ffe3a4';
+var FMPapikey =    '9f9b6e858376323424e765f45067c09e';
 // another spare key '65a7a307c49a31bc405d2356c9e065ea'
+
 
 function stockAPI (date) {
 
-  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+FMPapikey;
+  var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+ FMPapikey;
+
   
 
 fetch(stockURL)
@@ -274,6 +344,7 @@ fetch(todaystockURL)
   return response.json()
 })
 .then(function (data) {
+  if ($('.mystockAPIdiv') == null) {
   if(date == moment().format('M/D/YYYY')) {
     console.log(data)
 
@@ -291,7 +362,8 @@ fetch(todaystockURL)
     closeprice.textContent = 'Real-time Price : ' + data[0].price.toFixed(2);
 
     todayIndexdiv.append(closeprice)
-  }
+
+  }}
 })
 
 
@@ -418,7 +490,7 @@ fetch(todaystockURL)
 .then(function (data) {
 
   var date = $('#dialogHeaderContent').text();
-
+  if ($('.mystockAPIdiv') == null) {
   if(date == moment().format('M/D/YYYY')) {
     console.log(data)
 
@@ -436,7 +508,8 @@ fetch(todaystockURL)
     mystockPrice.textContent = 'Real-time Price : ' + data[0].price.toFixed(2);
 
     todayMystockDiv.append(mystockPrice)
-  }
+
+  }}
 })
 
 }

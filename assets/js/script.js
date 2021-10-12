@@ -5,11 +5,12 @@ let weather;
 let pulledData = JSON.parse(localStorage.getItem("data"));
 let data = (pulledData !== null) ? pulledData : {};
 let newEvent = [];
+let calendarYear;
 
 //call calendar api
 function getHolidays(event)
 {
-  fetch('https://calendarific.com/api/v2/holidays?&api_key=0304ab491c16d7aae9858fa131471a6febc6e8c6&country=US&year=2021&type=national')
+  fetch(`https://calendarific.com/api/v2/holidays?&api_key=0304ab491c16d7aae9858fa131471a6febc6e8c6&country=US&year=${calendarYear}&type=national`)
   .then(function(response)
   {
   	return response.json();
@@ -158,6 +159,7 @@ const renderCalendar = () => {
   for (let i = 1; i <= lastDay; i++) {
     let month = date.getMonth();
     let year = date.getFullYear();
+    calendarYear = year;
     if (
       i === new Date().getDate() &&
       date.getMonth() === new Date().getMonth()

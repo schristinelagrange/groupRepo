@@ -2,7 +2,7 @@
 
 1. On this page, you can manage your schedule by month.
 
-2. The main page shows the monthly calendars for this month. And you can browse the previous or next month.
+2. The main page shows the monthly calendar for the current month. And you can browse the previous or next month.
 
 3. Click on the date you want, and the sidebar presents all specific information you might need.
     - You can check holidays.
@@ -17,7 +17,14 @@
 5. On the footer displays the webpage description and GitHub page link.
 
 
-
 [Link To Deployed Website](https://schristinelagrange.github.io/lifePlanner/)
 
 ![LifePlanner](add gif file link)
+
+
+
+# Resources Used:
+
+[Link To CSS Libary Used](https://materializecss.com/)
+
+[Link To Code Used For Base Of Calendar](https://github.com/lashaNoz/Calendar)

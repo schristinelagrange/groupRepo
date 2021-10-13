@@ -56,7 +56,7 @@
     font-size: 1.5rem;
     font-weight: 400;
     letter-spacing: 0.1rem;
-    width: calc(90% / 7);
+    width: calc(99% / 7);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,8 +77,9 @@
     font-size: 1.4rem;
     margin: 0.3rem;
     width: calc(90% / 7);
-    height: calc(50vh / 5);
+    height: calc(46vh / 5);
     display: flex;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
     text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
@@ -155,9 +156,10 @@ footer a {
   position: relative;
   display: flex;
   min-width: 100%;
+  border-bottom: 1px solid #ee6e73;
 }
 .delEvent{
-  position: relative;
+  position: absolute;
   right:0;
 }
 

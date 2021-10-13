@@ -1,5 +1,8 @@
 # LifePlanner
 
+![LifePlanner](add gif file link)
+
+
 1. On this page, you can manage your schedule by month.
 
 2. The main page shows the monthly calendar for the current month. And you can browse the previous or next month.
@@ -17,8 +20,26 @@
 5. On the footer displays the webpage description and GitHub page link.
 
 
-[Link To CSS Libary used](https://materializecss.com/)
+# Resources used
+Base of Calender (https://github.com/lashaNoz/Calendar)
+CSS Libary used (https://materializecss.com/)
 
-[Link To Deployed Website](https://schristinelagrange.github.io/lifePlanner/)
+# APIs used
+Weather APIs
+(https://openweathermap.org/api)
 
-![LifePlanner](add gif file link)
+Holiday APIs
+(https://calendarific.com/api-documentation)
+
+Financial APIs
+(https://financialmodelingprep.com/developer/docs#Stock-Historical-Price)
+(https://financialmodelingprep.com/developer/docs/realtime-stock-quote-api)
+(https://financialmodelingprep.com/developer/docs#Stock-Screener)
+
+# Link To Deployed Website
+(https://schristinelagrange.github.io/lifePlanner/)
+
+# Presentation Link
+(https://docs.google.com/presentation/d/1RQ9Uwj78dQtANnG1htISJCRMa7O_hsqe1elH9vbnyHo/edit#slide=id.p)
+
+

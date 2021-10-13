@@ -21,7 +21,7 @@
 
 ![LifePlanner](add gif file link)
 
-
+[Presentation](https://docs.google.com/presentation/d/1RQ9Uwj78dQtANnG1htISJCRMa7O_hsqe1elH9vbnyHo/edit#slide=id.g29f43f0a72_0_24)
 
 # Resources Used:
 

@@ -96,7 +96,7 @@ function renderEvents()
   {
     newEvent = data[dialogHeaderContent];
   }
-  newEvent.push(`<div class="eventDiv" ><p>${eventText}</p><input type="button" class="delEvent" value = "delete"></div>`)
+  newEvent.push(`<div class="eventDiv" ><p>${eventText}</p><input type="button" class="delEvent btn-small" value = "X"></div>`)
   $("#eventText").val("")
   data[dialogHeaderContent] = newEvent;
   localStorage.setItem('data', JSON.stringify(data))
@@ -109,7 +109,7 @@ $( document ).on('click','.delEvent',function(event)
   let targetDivContent = event.target.previousSibling.outerText;
   let targetDate = $("#dialogHeaderContent").text();
   //find the index of the content we are deleting
-  let dataIndex = data[targetDate].indexOf(`<div class="eventDiv" ><p>${targetDivContent}</p><input type="button" class="delEvent" value = "delete"></div>`);
+  let dataIndex = data[targetDate].indexOf(`<div class="eventDiv" ><p>${targetDivContent}</p><input type="button" class="delEvent btn-small" value = "X"></div>`);
   //if the array is longer than 1, splice the array to remove the value wanting to be deleted
   if(data[targetDate].length > 1)
   {

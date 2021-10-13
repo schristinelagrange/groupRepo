@@ -1,6 +1,6 @@
 # LifePlanner
 
-![LifePlanner](add gif file link)
+![LifePlanner](./assets/images/calendar.png)
 
 
 1. On this page, you can manage your schedule by month.

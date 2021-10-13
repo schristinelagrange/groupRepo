@@ -2,27 +2,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Quicksand", sans-serif;
+    
   }
   
   html {
     font-size: 62.5%;
   }
   
-  .container {
-    width: 100%;
-    height: 100vh;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
   .calendar {
-    width: 90%;
-    height: 90%;
     
-    box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4);
+    height: 90%;
+    width: 100%;
   }
   
   .month {
@@ -59,19 +49,20 @@
     height: 5rem;
     padding: 0 0.4rem;
     display: flex;
-    align-items: center;
+    justify-content: center;
   }
   
   .weekdays div {
     font-size: 1.5rem;
     font-weight: 400;
     letter-spacing: 0.1rem;
-    width: calc(90% / 7);
+    width: calc(99% / 7);
     display: flex;
     justify-content: center;
     align-items: center;
     text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
     color: white;
+    margin: 0.3rem;
   }
   
   .days {
@@ -85,8 +76,8 @@
   .days div {
     font-size: 1.4rem;
     margin: 0.3rem;
-    width: calc(90% / 7);
-    height: calc(50vh / 5);
+    width: calc(94% / 7);
+    height: calc(46vh / 5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -124,9 +115,9 @@
     position: absolute;
     z-index: 100;
     right: 0px; 
-    top: 5%;
+    top: 7%;
     width: 30%; 
-    height: 90%; 
+    height: 68%; 
     visibility: hidden;
   }
 
@@ -135,7 +126,8 @@
   }
   #dialogContent{
     background-color: #262626 ;
-    height: 90%;
+    height: 88%;
+    overflow: auto;
   }
 
   #eventText{
@@ -144,7 +136,29 @@
     padding: 5px 0;
   }
 
-  #weatherInfo, #eventData{
+  #weatherInfo, #eventData, #holidayInfo{
     font-size: 20px;
     color: white;
   }
+
+footer p {
+  font-size: 17px;
+
+}
+
+footer a {
+  font-size: 17px;
+
+}
+
+.eventDiv{
+  position: relative;
+  display: flex;
+  min-width: 100%;
+  border-bottom: 1px solid #ee6e73;
+}
+.delEvent{
+  position: absolute;
+  right:0;
+}
+

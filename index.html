@@ -26,17 +26,30 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
   ></script>
   </head>
-  <body class="blue lighten-4">
+  <!--Materialize class for background-color-->
+  <body class="red lighten-3">
   
-    <div class="container">
-      <div class="calendar blue-grey">
+  <main>
+    
+
+    <!--Materialize Navbar language markup-->
+    <nav>
+      <div class="nav-wrapper"><a class="brand-logo center thin">Life Planner</a></div>
+    </nav>
+
+    <!--Monthly Calendar-->
+    <!--Materielize Container class - sets element to 70% of window width and helps center page content, Materialize text-color class -->
+    <div class="container black-text">
+      <div class="calendar">
         <div class="month">
-          <i class="fas fa-angle-left prev"></i>
+          <!--Materialize icon-->
+          <i class="large material-icons prev">chevron_left</i>
           <div class="date">
             <h1></h1>
             <p></p>
           </div>
-          <i class="fas fa-angle-right next"></i>
+          <!--Materialize icon-->
+          <i class="large material-icons next">chevron_right</i>
         </div>
         <div class="weekdays">
           <div>Sun</div>
@@ -50,29 +63,32 @@
         <div class="days"></div>
       </div>
     </div>
-    <form id="infoForm">
-      <div id="calenderDialog">
-        <header id=dialogHeader>
-          
-          <a class="waves-effect waves-light btn-small" id="closeDialog"><i class="large material-icons">close</i></a>
-        <h1 id='dialogHeaderContent'></h1>
-        </header>
-        <div id=dialogContent>
-          <input type="text" id="eventText" class="white-text" placeholder="Enter Event" autocomplete="off">
-         
-          <a class="waves-effect waves-light btn-small" id="saveEvent"><i class="material-icons">add</i></a>
-          <div id="weatherInfo"></div>
-          <div id="eventData"> </div>
-          <button type="button" id="deleteData">Delete Tasks</button>
-          <div class="input-group mb-3" id="searchStock">
-          <input type="text" class="form-control stockinput white-text" placeholder="Enter Mystock" aria-label="Enter Mystock" aria-describedby="button-addon2">
-          <a class="waves-effect waves-light btn-small stocksavebtn" id="button-addon2"><i class="material-icons">add</i></a>
+    <!--Sidebar Dialog-->
+      <form id="infoForm">
+        <div id="calenderDialog">
+          <header id=dialogHeader>
+            <!--Materialize button with Materialize close icon-->
+            <a class="waves-effect waves-light btn-small" id="closeDialog"><i class="large material-icons">close</i></a>
+          <h1 id='dialogHeaderContent'></h1>
+          </header>
+          <!--Materialize background-color class-->
+          <div id=dialogContent class="blue-grey">
+            <div id="weatherInfo"></div>
+            <input type="text" id="eventText" class="white-text" placeholder="Enter Event" autocomplete="off">
+            <!--Materialzie button with Materialize add icon-->
+            <a class="waves-effect waves-light btn-small" id="saveEvent"><i class="material-icons">add</i></a>
+            <div id="eventData"> </div>
+            <!--Materialize button-->
+            <a class="waves-effect waves-light btn-small" id="deleteData">Delete Tasks</a>
+            <div class="input-group mb-3" id="searchStock">
+            <input type="text" class="form-control stockinput white-text" placeholder="Enter Mystock" aria-label="Enter Mystock" aria-describedby="button-addon2">
+            <!--Materialize button with Materialize add icon-->
+            <a class="waves-effect waves-light btn-small stocksavebtn" id="button-addon2"><i class="material-icons">add</i></a>
+            </div>
           </div>
         </div>
-        
+      </form>
 
-      </div>
-    </form>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -84,6 +100,24 @@
 
 
 </script>
+<!--Materialize Footer language markup-->
+<footer class="page-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h3 class="white-text">Life Planner</h3>
+        <p class="grey-text text-lighten-4">A monthly calendar to organize you life with. Keep track of the weather based on your location, your tasks, and favorite stocks.</p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h3 class="white-text">Links</h3>
+        <ul>
+          <li><a class="grey-text text-lighten-3" href="https://github.com/schristinelagrange/lifePlanner">GitHub Page</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+</main>
 </body>
 
 </html>

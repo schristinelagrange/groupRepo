@@ -10,7 +10,7 @@
     - You can see S&P index for that day.
 
 
-4. Also, you can customize the schedule based on input from the side bar.
+4. Also, you can customize the schedule through the input from the side bar.
     - You can insert and delete your personal events. It exists in you local storage.
     - If you set your favorite stock, it also presents the price of the stock. And it will last until you change your stock.
 

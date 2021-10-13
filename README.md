@@ -17,8 +17,14 @@
 5. On the footer displays the webpage description and GitHub page link.
 
 
-[Link To CSS Libary used](https://materializecss.com/)
-
 [Link To Deployed Website](https://schristinelagrange.github.io/lifePlanner/)
 
 ![LifePlanner](add gif file link)
+
+
+
+# Resources Used:
+
+[Link To CSS Libary Used](https://materializecss.com/)
+
+[Link To Code Used For Base Of Calendar](https://github.com/lashaNoz/Calendar)

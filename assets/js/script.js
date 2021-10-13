@@ -251,7 +251,6 @@ if($('.stockAPIdiv') == null) {
   stockAPI(date);
 } else {
   $('.stockAPIdiv').remove();
-  console.log($('.stockAPIdiv'));
   stockAPI(date);
 }
 
@@ -281,7 +280,7 @@ $("#deleteData").click(function()
 //stock API
 //spare key '4e011863df1e09d29721886272ffe3a4';
 //spare key '9f9b6e858376323424e765f45067c09e';
-var FMPapikey =    '65a7a307c49a31bc405d2356c9e065ea';
+var FMPapikey =    '9f9b6e858376323424e765f45067c09e';
 // another spare key '65a7a307c49a31bc405d2356c9e065ea'
 
 
@@ -339,17 +338,17 @@ for(let i=0; i<data.historical.length; i++) {
 
 })
 
+
+
   var todaystockURL = 'https://financialmodelingprep.com/api/v3/quote-short/%5EGSPC?apikey=' +FMPapikey;
 fetch(todaystockURL)
 .then(function(response) {
   return response.json()
 })
 .then(function (data) {
-  console.log(data)
-  if ($('.stockAPIdiv') == null) {
-    console.log(data)
+  if($('.stockAPIdiv')[0] == null) {
   if(date == moment().format('M/D/YYYY')) {
-    console.log(data)
+
 
     var todayIndexdiv = document.createElement('div');
     todayIndexdiv.classList = "stockAPIdiv";
@@ -368,7 +367,6 @@ fetch(todaystockURL)
 
   }}
 })
-
 
 }
 
@@ -491,12 +489,10 @@ fetch(todaystockURL)
   return response.json()
 })
 .then(function (data) {
-
-  console.log($('.stockAPIdiv'))
+  if($('.mystockAPIdiv')[0] == null) {
   var date = $('#dialogHeaderContent').text();
-  if ($('.mystockAPIdiv') == null) {
+
   if(date == moment().format('M/D/YYYY')) {
-    console.log(data)
 
     var todayMystockDiv = document.createElement('div');
     todayMystockDiv.classList = "mystockAPIdiv";

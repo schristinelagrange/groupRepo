@@ -97,7 +97,7 @@ function renderEvents()
     newEvent = data[dialogHeaderContent];
   }
   newEvent.push(`<div class="eventDiv" ><p>${eventText}</p><input type="button" class="delEvent btn-small" value = "X"></div>`)
-  $("#eventText").val("")
+    $("#eventText").val("")
   data[dialogHeaderContent] = newEvent;
   localStorage.setItem('data', JSON.stringify(data))
   $("#eventData").html(data[dialogHeaderContent])
@@ -110,7 +110,7 @@ $( document ).on('click','.delEvent',function(event)
   let targetDate = $("#dialogHeaderContent").text();
   //find the index of the content we are deleting
   let dataIndex = data[targetDate].indexOf(`<div class="eventDiv" ><p>${targetDivContent}</p><input type="button" class="delEvent btn-small" value = "X"></div>`);
-  //if the array is longer than 1, splice the array to remove the value wanting to be deleted
+ //if the array is longer than 1, splice the array to remove the value wanting to be deleted
   if(data[targetDate].length > 1)
   {
     data[targetDate].splice(dataIndex,1)
@@ -287,10 +287,10 @@ var FMPapikey =    '4e011863df1e09d29721886272ffe3a4';
 function stockAPI (date) {
 
   var stockURL = 'https://financialmodelingprep.com/api/v3/historical-price-full/%5EGSPC?apikey='+ FMPapikey;
-
   
 
-fetch(stockURL)
+
+  fetch(stockURL)
 .then(function (response) {
   return response.json()
 })
@@ -338,15 +338,17 @@ for(let i=0; i<data.historical.length; i++) {
 
 })
 
+
+
   var todaystockURL = 'https://financialmodelingprep.com/api/v3/quote-short/%5EGSPC?apikey=' +FMPapikey;
 fetch(todaystockURL)
 .then(function(response) {
   return response.json()
 })
 .then(function (data) {
-  if ($('.mystockAPIdiv') == null) {
+  if($('.stockAPIdiv')[0] == null) {
   if(date == moment().format('M/D/YYYY')) {
-    console.log(data)
+
 
     var todayIndexdiv = document.createElement('div');
     todayIndexdiv.classList = "stockAPIdiv";
@@ -365,7 +367,6 @@ fetch(todaystockURL)
 
   }}
 })
-
 
 }
 
@@ -488,11 +489,10 @@ fetch(todaystockURL)
   return response.json()
 })
 .then(function (data) {
-
+  if($('.mystockAPIdiv')[0] == null) {
   var date = $('#dialogHeaderContent').text();
-  if ($('.mystockAPIdiv') == null) {
+
   if(date == moment().format('M/D/YYYY')) {
-    console.log(data)
 
     var todayMystockDiv = document.createElement('div');
     todayMystockDiv.classList = "mystockAPIdiv";
